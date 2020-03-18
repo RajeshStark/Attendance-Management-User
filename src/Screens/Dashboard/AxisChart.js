@@ -22,7 +22,7 @@ export default class YAxisExample extends React.PureComponent {
   <Text style={{fontSize:22, paddingLeft:20}}>Attendance Graph</Text>
   <LineChart
     data={{
-      labels: ["1-jan", "2-jan", "3-janh", "4-jan", "5-jan", "6-jan", "7-jan"],
+      labels: ["1-jan", "2-jan", "3-jan", "4-jan", "5-jan", "6-jan", "7-jan"],
       datasets: [
         {
           data: [
@@ -44,12 +44,15 @@ export default class YAxisExample extends React.PureComponent {
     // yAxisSuffix="k"
     yAxisInterval={1} // optional, defaults to 1
     chartConfig={{
-     backgroundColor: "#fff",
-      backgroundGradientFrom: "#ffffff", //"#FFEFBA"
-      backgroundGradientTo: "#FFFFFF",
+    //  backgroundColor: "#fff",
+    //   backgroundGradientFrom: "#FFEFBA", //"#FFEFBA"
+    //   backgroundGradientTo: "#FFFFFF",
+    backgroundColor: "#e26a00",
+    backgroundGradientFrom: "#fb8c00",
+    backgroundGradientTo: "#ffa726",
       decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       style: {
         borderRadius: 5
       },

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage, Button, Text, View, Dimensions, ImageBackground, StatusBar } from 'react-native';
+import { Button, Text, View, Dimensions, ImageBackground, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from 'react-native-paper';
-
+import AsyncStorage from '@react-native-community/async-storage';
 //My inports
 import MyTabs from '../Navigation/BottomNav/BottomNavigation';
 import Splash from './Splash';
@@ -36,7 +36,7 @@ function SignInScreen() {
 
   return (
     <View >
-      <StatusBar  barStyle="dark-content" backgroundColor="darkblue"/>
+      <StatusBar  barStyle="dark-content" backgroundColor="#2B65EC"/>
     <View style={{alignItems: 'center', height: (dimensions.window.height) }}>
     <ImageBackground 
     source={{uri: 'https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg'}}

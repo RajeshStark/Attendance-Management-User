@@ -9,7 +9,9 @@ import YAxisExample from './AxisChart'
 export default class DashboardMain extends Component {
     render() {
         return (
-            <ScrollView>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+            >
             <View>
                  <StatusBar barStyle="light-content" backgroundColor='#2B65EC'/>
                  <View style={DashboardStyles.ViewStyle}>
@@ -31,16 +33,13 @@ export default class DashboardMain extends Component {
                     </View>
 
                     <View style={{paddingTop:10}}>
-                    <TouchableOpacity style={DashboardStyles.touchable}>
+                    <TouchableOpacity style={DashboardStyles.touchable}
+                      onPress={() => this.props.navigation.navigate('LeaveReport')}
+                    >
                         <Text style={DashboardStyles.mainText}>Attendance Report</Text>
                     </TouchableOpacity>
                     </View>
 
-                    <View style={{paddingTop:10}}>
-                    <TouchableOpacity style={DashboardStyles.touchable}>
-                        <Text style={DashboardStyles.mainText}>Attendance Report</Text>
-                    </TouchableOpacity>
-                    </View>
                <View style={{padding:10, marginBottom:20}}>
                 <YAxisExample/>
                </View>        

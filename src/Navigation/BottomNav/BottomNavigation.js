@@ -15,7 +15,8 @@ export default function MyTabs() {
     <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        //activeTintColor: '#e91e63',
+        activeTintColor: '#2B65EC',
       }}
     >
       <Tab.Screen
@@ -24,7 +25,7 @@ export default function MyTabs() {
         options={{
           tabBarLabel: 'Dashboard',
           tabBarIcon: ({focused }) => (
-            <MaterialCommunityIcons name="view-dashboard" size={25} color={focused ? '#e91e63' : '#808080'} />
+            <MaterialCommunityIcons name="view-dashboard" size={25} color={focused ? '#2B65EC' : '#808080'} />
           ),
         }}
       />
@@ -34,7 +35,7 @@ export default function MyTabs() {
         options={{
             tabBarLabel: 'Regularisation',
             tabBarIcon: ({focused }) => (
-              <MaterialCommunityIcons name="comment-text" size={25} color={focused ? '#e91e63' : '#808080'} />
+              <MaterialCommunityIcons name="comment-text" size={25} color={focused ? '#2B65EC' : '#808080'} />
             ),
           }}
       />
@@ -44,7 +45,7 @@ export default function MyTabs() {
         options={{
             tabBarLabel: 'Leave',
             tabBarIcon: ({focused }) => (
-              <MaterialCommunityIcons name="calendar-text-outline" size={25} color={focused ? '#e91e63' : '#808080'} />
+              <MaterialCommunityIcons name="calendar-text-outline" size={25} color={focused ? '#2B65EC' : '#808080'} />
             ),
           }}
       />
@@ -54,7 +55,7 @@ export default function MyTabs() {
         options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({focused }) => (
-              <MaterialCommunityIcons name="account" size={25} color={focused ? '#e91e63' : '#808080'} />
+              <MaterialCommunityIcons name="account" size={25} color={focused ? '#2B65EC' : '#808080'} />
             ),
           }}
       />

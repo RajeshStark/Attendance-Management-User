@@ -11,7 +11,7 @@ export default StyleSheet.create({
     }, 
   ViewStyle:{
     width: (DEVICE_WIDTH),
-    height:(DEVICE_WIDTH)/1.4,
+    height:(DEVICE_WIDTH)/1.6,
     backgroundColor:'#2B65EC',
     borderBottomRightRadius:80,
     borderBottomLeftRadius:80,
