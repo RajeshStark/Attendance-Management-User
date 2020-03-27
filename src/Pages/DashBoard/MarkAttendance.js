@@ -12,9 +12,8 @@ import Geolocation from 'react-native-geolocation-service';
 
 
 
-export default class App extends Component {
-
-  watchId = null;
+export default class MarkAttendance extends Component {
+//  watchId = null;
 
   state = {
     date: '',
@@ -35,7 +34,7 @@ export default class App extends Component {
 
   }
 
-
+// Permisson
   hasLocationPermission = async () => {
     if (Platform.OS === 'ios' ||
       (Platform.OS === 'android' && Platform.Version < 23)) {
@@ -63,6 +62,8 @@ export default class App extends Component {
     return false;
   }
 
+
+// Getting  Location
   getLocation = async () => {
     const hasLocationPermission = await this.hasLocationPermission();
 
@@ -77,12 +78,13 @@ export default class App extends Component {
 
             // ToastAndroid.show('You Are In NutanTek', ToastAndroid.LONG);
             this.setState({
-              nowArea: 'You Are Within Range Of Nutantek'
+              nowArea: 'You Are Within Range Of Nutantek',
+              checkOut:true
             })
           } else {
             // ToastAndroid.show('You Are Not In NutanTek', ToastAndroid.LONG);
             this.setState({
-              nowArea: 'You Are Out Of Range Nutantek',
+              nowArea: 'You Are Not In Range Of Nutantek',
               checkIn:true,
               checkOut:true
             })
@@ -98,32 +100,34 @@ export default class App extends Component {
     });
   }
 
+  // Handling CheckIn
+  CheckinHandler = () => {
+    this.setState({checkIn:true,checkOut:false})
+  }
+
+  // Handling CheckOut
+  CheckoutHandler = () => {
+    this.setState({checkIn:false,checkOut:true})
+  }
+
+
 
   render() {
    
     return (
-      <View>
-        <Appbar.Header style={{ backgroundColor: '#fff' }}>
-          <Appbar.BackAction
-            onPress={() => this.props.navigation.goBack()}
-          />
-          <Appbar.Content
-            title="Attendance"
-          />
-
-        </Appbar.Header>
+      <View style={{paddingTop:10}}>
         <View>
-          <View>
+          {/* <View>
             <Text style={{ fontSize: 22, textAlign: 'center' }}>Punch In Now</Text>
-          </View>
-          <Text style={{ fontSize: 22, textAlign: 'center' }}>{this.state.date}</Text>
-          <Text style={{ fontSize: 18, textAlign: 'center' }}>{this.state.nowArea}</Text>
+          </View> */}
+          <Text style={{ fontSize: 18, textAlign: 'center' }}>{this.state.date}</Text>
+          <Text style={{ fontSize: 16, textAlign: 'center' }}>{this.state.nowArea}</Text>
         </View>
         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
-        <Button icon="checkbox-marked-circle-outline" mode="contained" disabled={this.state.checkIn}  onPress={() => this.setState({checkIn:true,checkOut:false})}>
+        <Button color="#2B65EC" icon="checkbox-marked-circle-outline" mode="contained" disabled={this.state.checkIn} onPress={this.CheckinHandler}>
           Check In
         </Button>
-        <Button icon="logout" mode="contained" disabled={this.state.checkOut}  onPress={() => this.setState({checkIn:false,checkOut:true})}>
+        <Button color="#2B65EC" icon="logout" mode="contained" disabled={this.state.checkOut} onPress={this.CheckoutHandler}>
           Check Out
         </Button>
         </View>

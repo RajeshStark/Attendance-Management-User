@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderBottomRightRadius:80,
     borderBottomLeftRadius:80,
     justifyContent:'flex-start',
-    paddingTop:10,
+    paddingTop:30,
     alignItems:'center'
 
   },
@@ -25,18 +25,9 @@ touchable:{
     padding:20,
     justifyContent:'center',
     alignItems:'center',
-
-    borderRadius:10,
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-    
-    elevation: 2,
- 
+    borderRadius:10,   
+    borderWidth:0.5,
+    borderColor:'#000'
 },
 mainText:{
    fontSize:18, 

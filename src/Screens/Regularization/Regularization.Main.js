@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import Segment from './Segment'
+
 
 export default class RegularizationMain extends Component {
-    render() {
-        return (
-            <View>
-                <Text> Regularization </Text>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <ScrollView>
+              <Segment />
+      </ScrollView>
+    )
+  }
 }

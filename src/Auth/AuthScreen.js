@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Text, View, Dimensions, ImageBackground, StatusBar } from 'react-native';
+import { Button, Text, View, Dimensions, ImageBackground, StatusBar,Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 //My inports
-import MyTabs from '../Navigation/BottomNav/BottomNavigation';
+import MyTabs from '../Navigation/BottomNavigation';
 import Splash from './Splash';
 
 const AuthContext = React.createContext();
@@ -15,20 +15,7 @@ const screen = Dimensions.get("screen");
 
 
 function SignInScreen() {
-
   const [dimensions, setDimensions] = useState({ window, screen });
-
-  // const onChange = ({ window, screen }) => {
-  //   setDimensions({ window, screen });
-  // };
-
-  // // useEffect(() => {
-  // //   Dimensions.addEventListener("change", onChange);
-  // //   return () => {
-  // //     Dimensions.removeEventListener("change", onChange);
-  // //   };
-  // // });
-
   const [username, setUsername] = React.useState('+91');
   const [password, setPassword] = React.useState('');
 
@@ -36,14 +23,14 @@ function SignInScreen() {
 
   return (
     <View >
-      <StatusBar  barStyle="dark-content" backgroundColor="#2B65EC"/>
+      <StatusBar  barStyle="dark-content" backgroundColor="#79C3E6"/>
     <View style={{alignItems: 'center', height: (dimensions.window.height) }}>
     <ImageBackground 
-    source={{uri: 'https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg'}}
+    source={{uri: 'https://nutantek.com/images/home.jpg'}}
     imageStyle={{width:(dimensions.window.width),height:(dimensions.window.width)/2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
     style={{width:(dimensions.window.width),height:(dimensions.window.width)/2}}>
     </ImageBackground>
-      <View style={{padding:30, marginTop:-80,backgroundColor:'#fff', width: (dimensions.window.width)-60 , height: (dimensions.window.width)-60 ,borderRadius:10,borderWidth:0.1}}>
+      <View style={{padding:30, marginTop:-80,backgroundColor:'#fff', width: (dimensions.window.width)-60 , height: (dimensions.window.width)-80 ,borderRadius:10,borderWidth:0.1}}>
         <View style={{ paddingBottom: 10 }}>
           <TextInput
             placeholder="Mobile Number"
@@ -71,34 +58,12 @@ function SignInScreen() {
         <Button title="Submit" onPress={() => signIn({ username, password })} />
         <Text style={{fontSize:18,textAlign:'center',marginTop:10}}>Forgot Password ?</Text>
       </View>
-      {/* <View style={{  
-        width: (dimensions.window.width)-60,
-        height: 0,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderRightWidth: 350,
-        borderTopWidth: 150,
-        borderRightColor: 'transparent',
-        borderTopColor: '#fff',
-       // marginTop:-10,
-      }}/>
-
-    <View style={{  
-        width: (dimensions.window.width)-60,
-        height: 0,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderRightWidth: 350,
-        borderTopWidth: 150,
-        borderRightColor: 'transparent',
-        borderTopColor: '#fff',
-        marginTop:-120,
-        transform: [
-         {rotate: '180deg'}
-        ]
-      }}/> */}
-    </View>
-    
+      <Text style={{fontSize:18,textAlign:'center'}}>Designed and developed By</Text>
+    <Image 
+     source={require('../assets/logoNutantek.png')}
+     style={{width: (dimensions.window.width)-20,height: (dimensions.window.width)/5}}
+    />
+    </View> 
     </View>
   );
 }
