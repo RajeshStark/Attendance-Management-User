@@ -6,7 +6,7 @@ class RmDetails extends React.Component {
         return (
             <View style={{margin:10}}>
                 <View style={{ alignItems: 'center', padding: 10 }}>
-                    <Text style={{ fontSize: 18 }}>Rm Details</Text>
+                    <Text style={{ fontSize: 18 }}>RM Details</Text>
                 </View>
                 <View >
                 <View style={styles.ListView}>

@@ -6,7 +6,7 @@ class ProfileDetails extends React.Component {
         return (
             <View style={{margin:10}}>
                 <View style={{ alignItems: 'center', padding: 10 }}>
-                    <Text style={{ fontSize: 18 }}>Your Details</Text>
+                    <Text style={{ fontSize: 18 }}>My Details</Text>
                 </View>
                 <View>
                 <View style={styles.ListView}>
@@ -34,10 +34,12 @@ class ProfileDetails extends React.Component {
                       <Text style={styles.text}>+91-9398838327</Text>
                 </View>
                 <View style={styles.ListView}>
-                      <Text style={styles.text}>Work E-mail: {"\n"}rajesh.s@nutantek.com</Text> 
+                      <Text style={styles.text}>Work:- </Text> 
+                      <Text style={styles.text}>rajesh.s@nutantek.com</Text>
                 </View>
                 <View style={styles.ListView}>
-                <Text style={styles.text}>E-mail: {"\n"}sangapogurajesh@gmail.com</Text>
+                <Text style={styles.text}>Personal:- </Text>
+                <Text style={styles.text}>sangapogurajesh@gmail.com</Text>
                 </View>
                 </View>
             </View>
@@ -48,7 +50,7 @@ class ProfileDetails extends React.Component {
 
 export default ProfileDetails;
 
-// const DEVICE_WIDTH = Dimensions.get('window').width;
+ const DEVICE_WIDTH = Dimensions.get('window').width;
 // const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
@@ -60,11 +62,11 @@ const styles = StyleSheet.create({
         padding:10,
         marginBottom:5,
         borderRadius:10,
-       
     },
     text:{
       fontSize:16,
-      paddingHorizontal:10,
+      paddingHorizontal:5,
+    
     }
 
 });   

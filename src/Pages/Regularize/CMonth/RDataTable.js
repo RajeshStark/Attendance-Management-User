@@ -22,8 +22,8 @@ class RDataTable extends Component {
 
         <View style={styles.row}>
           <Text style={styles.headtxt}>Date</Text>
-          <Text style={styles.headtxt}>Cloack hrs</Text>
-          <Text style={styles.headtxt}>ShortFall</Text>
+          <Text style={styles.headtxt}>Cloack Hrs</Text>
+          <Text style={styles.headtxt}>Shortfall</Text>
           <Text style={styles.headtxt}>Regularize</Text>
         </View>
         <Divider style={{ backgroundColor: '#000' }} />
@@ -73,7 +73,7 @@ class RDataTable extends Component {
           <Text style={styles.bodytxt}>01:30</Text>
           <TouchableOpacity
             style={styles.btnP}
-            onPress={() => this.props.navigation.navigate('regularizeApply')}
+            onPress={() => this.props.navigation.navigate('regularizeView')}
           >
             <Text style={styles.btntxt}> Pending </Text>
           </TouchableOpacity>
@@ -87,7 +87,7 @@ class RDataTable extends Component {
             <Dialog.Title>Apply For Regularization</Dialog.Title>
             <Dialog.Content>
               <Text style={styles.text}>Date : 26/03/20</Text>
-              <Text style={styles.text}>Short Fall : 1 hr</Text>
+              <Text style={styles.text}>Shortfall : 1 hr</Text>
               <Text style={styles.text}>Justification :</Text>
               <TextInput
                 style={styles.textinput}

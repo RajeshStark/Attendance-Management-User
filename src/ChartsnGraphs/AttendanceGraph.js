@@ -8,14 +8,14 @@ import {
     ContributionGraph,
     StackedBarChart
   } from "react-native-chart-kit";
-
+import {Button} from 'react-native-paper'
  
 export default class AttendanceGraph extends React.PureComponent {
+
     render() {
         return (
          <View>
-             <View style={{ height: 240,padding:10}}>
-  <Text style={{fontSize:18, paddingLeft:20}}>Attendance Graph</Text>
+             <View style={{ height: 220}}>
   <LineChart
     data={{
       labels: ["1-jan", "2-jan", "3-jan", "4-jan", "5-jan", "6-jan", "7-jan"],
@@ -30,6 +30,7 @@ export default class AttendanceGraph extends React.PureComponent {
             Math.random() * 100,
             Math.random() * 100
           ]
+          
         }
       ],
     }}

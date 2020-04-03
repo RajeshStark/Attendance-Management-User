@@ -23,7 +23,7 @@ function SignInScreen() {
 
   return (
     <View >
-      <StatusBar  barStyle="dark-content" backgroundColor="#79C3E6"/>
+      <StatusBar  barStyle="dark-content" backgroundColor="#78C4E6"/>
     <View style={{alignItems: 'center', height: (dimensions.window.height) }}>
     <ImageBackground 
     source={{uri: 'https://nutantek.com/images/home.jpg'}}
@@ -67,11 +67,6 @@ function SignInScreen() {
     </View>
   );
 }
-
-
-
-
-
 
 
 const Stack = createStackNavigator();

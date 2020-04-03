@@ -1,38 +1,59 @@
-import React, { Component } from 'react'
-import { Text, View, KeyboardAvoidingView, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native'
-import { RadioButton } from 'react-native-paper';
+import React, { Component, useState } from 'react'
+import { Text, View, KeyboardAvoidingView, StyleSheet, Dimensions, TouchableOpacity, TextInput, Picker } from 'react-native'
+import { Checkbox } from 'react-native-paper';
 import GlobalStyles from '../../Styles/MainStyles';
+
+
+ function PickerComponent() {
+    const [selectedValue, setSelectedValue] = useState("java");
+    return (
+      <View style={styles.row}>
+          <Text style={{fontSize:18}}>Leave Type :-</Text>
+        <Picker
+          selectedValue={selectedValue}
+          style={styles.picker}
+          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        >
+          <Picker.Item label="Casual Leave" value="CL" />
+          <Picker.Item label="Personal Leave" value="PL" />
+          <Picker.Item label="Sick Leave" value="SL" />
+          <Picker.Item label="Business Leave" value="BL" />
+        </Picker>
+      </View>
+    );
+  }
 
 export default class LeaveApply extends Component {
 
     state = {
-        checked: 'first',
+        Fchecked: false,
+        Tchecked: false,
     };
+
     render() {
-        const { checked } = this.state;
+        const { Fchecked, Tchecked } = this.state;
         return (
             <View>
                 <KeyboardAvoidingView>
                     <View >
                         <View style={styles.row}>
                             <View style={styles.row}>
-                                <Text style={styles.text}>Full Day</Text>
-                                <RadioButton
-                                    value="first"
-                                    status={checked === 'first' ? 'checked' : 'unchecked'}
-                                    onPress={() => { this.setState({ checked: 'first' }); }}
+                                <Text style={styles.text}>Half Day</Text>
+                                <Checkbox
+                                    status={Fchecked ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ Fchecked: !Fchecked }); }}
                                 />
                             </View>
                             <View style={styles.row}>
                                 <Text style={styles.text}>Half Day</Text>
-                                <RadioButton
-                                    value="second"
-                                    status={checked === 'second' ? 'checked' : 'unchecked'}
-                                    onPress={() => { this.setState({ checked: 'second' }); }}
+                                <Checkbox
+                                    status={Tchecked ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ Tchecked: !Tchecked }); }}
                                 />
                             </View>
                         </View>
-                        <Text style={styles.text}>Purpose :</Text>
+                        <View style={{marginLeft:20}}><PickerComponent/></View>
+                        <Text style={styles.text}>Notes :</Text>
                         <TextInput
                             style={styles.textinput}
                             multiline={true}
@@ -59,7 +80,9 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent:'space-between',
+        marginEnd:10
     },
     text: {
         fontSize: 18,
@@ -77,9 +100,9 @@ const styles = StyleSheet.create({
     touchabletext: {
         fontSize: 18,
         marginLeft: 10,
-       
+
         color: '#fff',
-       
+
     },
     touchable: {
         width: (DEVICE_WIDTH) - 20,
@@ -87,7 +110,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#2B65EC',
         alignItems: 'center',
         margin: 10,
-        padding:10,
+        padding: 10,
         borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {
@@ -99,4 +122,13 @@ const styles = StyleSheet.create({
         elevation: 1,
 
     },
+    picker:{
+        height:50,
+        width:(DEVICE_WIDTH)/2,
+     
+    },
+    container:{
+        alignItems:'center',
+        justifyContent:'center'
+    }
 })

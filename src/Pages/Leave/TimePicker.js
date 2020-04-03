@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Platform, TextInput, Dimensions, StyleSheet, Text } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { IconButton, Colors, Checkbox } from 'react-native-paper';
+import { IconButton, Colors } from 'react-native-paper';
 import GlobalStyles from '../../Styles/MainStyles';
 
-const PickingDate = () => {
+const PickingTime = () => {
     return(
-      <View>
       <View style={styles.mainrow}>
-        <FromDatePicker/>
+        <FromTimePicker/>
         <Text style={styles.text}>-</Text>
-        <ToDatePicker/>
-      </View>
+        <ToTimePicker/>
       </View>
     )
   }
-  export default  PickingDate;
+  export default  PickingTime;
 
-const FromDatePicker = () => {
+const FromTimePicker = () => {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
-  const [fromdate, setFromdate] = useState('From Date');
+  const [fromdate, setFromdate] = useState('09:30');
 
   const onChangeF = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    setFromdate(currentDate.toLocaleDateString());
+    setFromdate(currentDate.toLocaleTimeString());
  
   };
 
@@ -37,7 +35,7 @@ const FromDatePicker = () => {
   };
 
   const showFDatepicker = () => {
-    showMode('date');
+    showMode('time');
   };
 
   return (
@@ -45,7 +43,7 @@ const FromDatePicker = () => {
       <View style={{flexDirection:'row',justifyContent:'space-around'}}>
       <View style={styles.row}>
         <IconButton
-          icon="calendar"
+          icon="av-timer"
           color={Colors.red500}
           size={20}
           onPress={showFDatepicker}
@@ -71,18 +69,18 @@ const FromDatePicker = () => {
 
 
 
-const ToDatePicker = () => {
+const ToTimePicker = () => {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
-  const [todate, setTodate] = useState('To Date')
+  const [todate, setTodate] = useState('07:00')
 
   const onChangeT = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     console.log(currentDate);
-    setTodate(currentDate.toLocaleDateString());
+    setTodate(currentDate.toLocaleTimeString());
   };
 
   const showMode = currentMode => {
@@ -90,7 +88,7 @@ const ToDatePicker = () => {
     setMode(currentMode);
   };
   const showTDatepicker = () => {
-    showMode('date');
+    showMode('time');
   };
 
   return (
@@ -98,7 +96,7 @@ const ToDatePicker = () => {
       
       <View style={styles.row}>
         <IconButton
-          icon="calendar"
+          icon="av-timer"
           color={Colors.red500}
           size={20}
           onPress={showTDatepicker}

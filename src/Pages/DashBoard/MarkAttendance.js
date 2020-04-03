@@ -25,7 +25,7 @@ export default class MarkAttendance extends Component {
     setInterval(() => {
       this.setState({
 
-        curTime: new Date().toLocaleString(),
+        curTime: new Date().toDateString(),
         date: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(),
       })
    
@@ -113,13 +113,14 @@ export default class MarkAttendance extends Component {
 
 
   render() {
-   
+ 
     return (
       <View style={{paddingTop:10}}>
         <View>
           {/* <View>
             <Text style={{ fontSize: 22, textAlign: 'center' }}>Punch In Now</Text>
           </View> */}
+          <Text style={{ fontSize: 18, textAlign: 'center' }}>{this.state.curTime}</Text>
           <Text style={{ fontSize: 18, textAlign: 'center' }}>{this.state.date}</Text>
           <Text style={{ fontSize: 16, textAlign: 'center' }}>{this.state.nowArea}</Text>
         </View>

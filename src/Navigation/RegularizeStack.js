@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import RegularizationMain from '../Screens/Regularization/Regularization.Main';
-import RegularizeApply from '../Pages/Regularize/RegularizeApply';
+import RegularizeApply from '../Pages/Regularize/RegularizeEdit';
 import RegularizeView from '../Pages/Regularize/RegularizeView';
 
 

@@ -30,22 +30,22 @@ export default function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Leave"
-        component={LeaveStack}
-        options={{
-            tabBarLabel: 'Leave',
-            tabBarIcon: ({focused }) => (
-              <MaterialCommunityIcons name="calendar-text-outline" size={25} color={focused ? '#2B65EC' : '#808080'} />
-            ),
-          }}
-      />
-       <Tab.Screen
         name="Regularisation"
         component={RegularizeStack}
         options={{
             tabBarLabel: 'Regularisation',
             tabBarIcon: ({focused }) => (
               <MaterialCommunityIcons name="comment-text" size={25} color={focused ? '#2B65EC' : '#808080'} />
+            ),
+          }}
+      />
+      <Tab.Screen
+        name="Leave"
+        component={LeaveStack}
+        options={{
+            tabBarLabel: 'Leave',
+            tabBarIcon: ({focused }) => (
+              <MaterialCommunityIcons name="calendar-text-outline" size={25} color={focused ? '#2B65EC' : '#808080'} />
             ),
           }}
       />

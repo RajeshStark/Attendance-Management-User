@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import { Appbar, IconButton, Colors, Button} from 'react-native-paper'
 
-export default class RegularizeView extends Component {
+export default class LeaveView extends Component {
     render() {
         return (
             <View>
@@ -11,7 +11,7 @@ export default class RegularizeView extends Component {
                         onPress={() => this.props.navigation.goBack()}
                     />
                     <Appbar.Content
-                        title="Regularize Report"
+                        title="Leave View"
                     />
                 </Appbar.Header>
                 <View>

@@ -3,6 +3,7 @@ import { View, Text, Dimensions } from 'react-native'
 import {
     PieChart,
 } from "react-native-chart-kit";
+import { IconButton } from 'react-native-paper';
 
 
 export default class LeavePieChart extends React.PureComponent {
@@ -10,6 +11,10 @@ export default class LeavePieChart extends React.PureComponent {
     render() {
         return (
             <View>
+                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                    <Text style={{ fontSize: 18, padding: 10 }}>Leaves</Text>
+                    <IconButton icon="file-download" size={25}/>
+                </View>
                 <View style={{
                 height: 240,
                 backgroundColor:'#fff',
@@ -27,26 +32,33 @@ export default class LeavePieChart extends React.PureComponent {
             }}>
                     <PieChart
                         data={[
+                             {
+                                name: 'Carry Forward',
+                                days: 3,
+                                color: '#32CD32',
+                                legendFontColor: '#7F7F7F',
+                                legendFontSize: 14,
+                            },
                             {
-                                name: 'Attended',
-                                days: 19,
+                                name: 'Eligible',
+                                days: 6,
                                 color: '#2B65EC',
                                 legendFontColor: '#7F7F7F',
-                                legendFontSize: 15,
+                                legendFontSize: 14,
                             },
                             {
-                                name: 'Absent',
-                                days: 1,
+                                name: 'Availed',
+                                days: 2,
                                 color: '#FF0000',
                                 legendFontColor: '#7F7F7F',
-                                legendFontSize: 15,
+                                legendFontSize: 14,
                             },
                             {
-                                name: 'Leave',
-                                days: 2,
+                                name: 'Balance',
+                                days: 4,
                                 color: '#FFEC00',
                                 legendFontColor: '#7F7F7F',
-                                legendFontSize: 15,
+                                legendFontSize: 14,
                             },
 
                         ]}

@@ -28,13 +28,14 @@ export default class EditProfile extends Component {
                             source={{ uri: 'https://i.ya-webdesign.com/images/funny-png-avatar-2.png' }}
                             style={{ marginTop: 30, height: 100, width: 100 }}
                         />
-                        <IconButton
-                            icon="plus"
-                            color={Colors.red500}
-                            style={{ marginLeft: 60, marginTop: -30, backgroundColor: "#fff", }}
-                            size={30}
-                            onPress={() => console.log('Pressed')}
-                        />
+                      <View style={styles.iconBContainer}>
+                            <IconButton
+                                icon="plus"
+                                color={Colors.red500}
+                                size={30}
+                                onPress={() => console.log('Pressed')}
+                            />
+                        </View>
                     </View>
                 </View>
                 <KeyboardAvoidingView>
@@ -81,6 +82,17 @@ const styles = StyleSheet.create({
     },
     iconbutton: {
         marginRight: 50,
+    },
+    iconBContainer:{
+        marginLeft: 50,
+        marginTop: -30,
+        height:45,
+        width:45,
+        justifyContent:'center',
+        alignItems:'center', 
+        backgroundColor: "#fff",
+        opacity:1, 
+        borderRadius:30
     },
     button: {
         margin: 10

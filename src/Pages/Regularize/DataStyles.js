@@ -36,14 +36,14 @@ const ColorCodes = {
       fontSize: 14,
       width: ((DEVICE_WIDTH) / 4) - 15
     },
-    btnP: {
+    btnA: {
             width: ((DEVICE_WIDTH) / 4) - 20,
             height: 30,
             backgroundColor: ColorCodes.info,
             justifyContent: 'center',
             alignItems: 'center',
           },
-    btnA: {
+    btnP: {
       width: ((DEVICE_WIDTH) / 4) - 20,
       height: 30,
       backgroundColor: ColorCodes.warning,

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
-import GlobalStyles from '../../Styles/MainStyles';
 import ProfileDetails from './profiledetails';
 import { ScrollView } from 'react-native-gesture-handler';
 import RmDetails from './Rmdetails';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 
 export default class ProfileMain extends Component {
     render() {
@@ -20,13 +19,16 @@ export default class ProfileMain extends Component {
                                 style={{ height: 100, width: 100 }}
                             />
                             <View style={{ justifyContent: 'space-evenly', marginLeft: 10 }}>
-                                <Text style={{ fontSize: 20, color: '#fff' }}>Rajesh Sangapogu</Text>
+                                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
+                                    <Text style={{ fontSize: 18, color: '#fff' }}>Rajesh Sangapogu</Text>
+                                    <IconButton icon='pencil' size={25} style={{marginLeft:30}} color="#fff" onPress={() => this.props.navigation.navigate('EditProfile')}/>
+                                </View>
                                 <Text style={{ fontSize: 16, color: '#fff' }}>React Native Developer</Text>
                                 <Text style={{ fontSize: 16, color: '#fff' }}>Nutantek Solutions</Text>
                             </View>
                         </View>
-                        <Button icon="pencil" style={styles.button} mode="contained" onPress={() => this.props.navigation.navigate('EditProfile')}>
-                            Edit Profile
+                        <Button icon="settings" style={styles.button} mode="contained" onPress={() => this.props.navigation.navigate('Settings')}>
+                            Settings
                         </Button>
                     </View>
                     <RmDetails />
@@ -44,10 +46,10 @@ const styles = StyleSheet.create({
     mainView: {
         backgroundColor: '#2B65EC',
         width: (DEVICE_WIDTH),
-        height: 200,
+        height: 180,
         justifyContent: 'center',
         paddingLeft: 10,
-        paddingTop:10
+        
     },
     iconbutton: {
         marginRight: 50,
