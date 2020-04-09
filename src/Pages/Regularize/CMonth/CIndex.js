@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Dimensions } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import RDataTable from './RDataTable'
 import RegularizeBar from '../../../ChartsnGraphs/RegularizeBar'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -31,6 +31,20 @@ export default class CIndex extends Component {
               </Button>
             </View>
           <View>
+          {/* <View style={{ flexDirection: 'row', alignItems:'baseline',marginBottom:10 }}>
+              <Text style={{ fontSize: 16, paddingLeft: 10 }}>Weekly Avg :- 08:30 Hrs :  </Text>
+              <TouchableOpacity style={{ fontSize: 14, paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
+              <IconButton icon="thumb-down-outline" color="#f0ad4e" size={20}/>
+              <Text style={{ fontSize: 16, color:"#f0ad4e" }}>YOU'R LAGGING</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems:'baseline',marginBottom:10 }}>
+              <Text style={{ fontSize: 16, paddingLeft: 10 }}>Monthly Avg :- 45:30 Hrs :  </Text>
+              <TouchableOpacity style={{ fontSize: 14, paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
+              <IconButton icon="thumb-up-outline" color="#5cb85c" size={20}/>
+              <Text style={{ fontSize: 16, color:"#5cb85c" }}>GREAT</Text>
+              </TouchableOpacity>
+            </View> */}
 
             <RegularizeBar />
             <RDataTable />

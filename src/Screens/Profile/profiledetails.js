@@ -34,11 +34,11 @@ class ProfileDetails extends React.Component {
                       <Text style={styles.text}>+91-9398838327</Text>
                 </View>
                 <View style={styles.ListView}>
-                      <Text style={styles.text}>Work:- </Text> 
+                      <Text style={styles.text}>Work: </Text> 
                       <Text style={styles.text}>rajesh.s@nutantek.com</Text>
                 </View>
                 <View style={styles.ListView}>
-                <Text style={styles.text}>Personal:- </Text>
+                <Text style={styles.text}>Personal: </Text>
                 <Text style={styles.text}>sangapogurajesh@gmail.com</Text>
                 </View>
                 </View>

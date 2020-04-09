@@ -6,7 +6,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MarkAttendance from '../../Pages/DashBoard/MarkAttendance'
 import AttendanceGraph from '../../ChartsnGraphs/AttendanceGraph'
 import { IconButton, Button } from 'react-native-paper'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import BellIcon from '../../Components/Bellicon'
 
 
 export default class DashboardMain extends Component {
@@ -18,7 +18,7 @@ export default class DashboardMain extends Component {
         <View>
           <StatusBar barStyle="light-content" backgroundColor='#2B65EC' />
           <View style={{alignItems:'flex-end',backgroundColor:'#2B65EC',paddingRight:10,paddingTop:10}}>
-           <MaterialCommunityIcons name="bell" size={25} color='#fff'/>
+           <BellIcon navigation={this.props.navigation.navigate}/>
           </View>
           <View style={DashboardStyles.ViewStyle}>
             
@@ -41,17 +41,21 @@ export default class DashboardMain extends Component {
             </View>
 
             </View>
-            <View style={{ flexDirection: 'row', alignItems:'flex-start' }}>
-              <Text style={{ fontSize: 16, paddingLeft: 10 }}>Weekly Avg :- 08:30 Hrs -  </Text>
-              <Button icon="thumb-down-outline" mode="text" color="#f0ad4e" onPress={() => this.props.navigation.navigate('AttendanceReport')}>
-                you'r lagging
-              </Button>
+            <View style={{ marginBottom:10 }}>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Weekly Avg :- </Text>
+              <TouchableOpacity style={{  paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>08:30 Hrs :  </Text>
+              <IconButton icon="thumb-down-outline" color="#f0ad4e" size={20}/>
+              <Text style={{ fontSize: 14, color:"#f0ad4e" }}>YOU'R LAGGING</Text>
+              </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-              <Text style={{ fontSize: 16, paddingLeft: 10 }}>Monthly Avg :- 45:30 Hrs </Text>
-              <Button icon="thumb-up" mode="text" color='#5cb85c' onPress={() => this.props.navigation.navigate('AttendanceReport')}>
-                Great
-              </Button>
+            <View style={{ marginBottom:10 }}>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Monthly Avg :- </Text>
+              <TouchableOpacity style={{  paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>45:30 Hrs :  </Text>
+              <IconButton icon="thumb-up-outline" color="#5cb85c" size={20}/>
+              <Text style={{ fontSize: 14, color:"#5cb85c" }}>GREAT</Text>
+              </TouchableOpacity>
             </View>
          
 

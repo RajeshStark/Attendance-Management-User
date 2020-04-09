@@ -16,8 +16,7 @@ const ColorCodes = {
   const styles = StyleSheet.create({
     main: {
       marginLeft: 5,
-      width: (DEVICE_WIDTH) - 5,
-      padding: 5,
+      width: (DEVICE_WIDTH),
       marginTop: 20
     },
     row: {
@@ -27,13 +26,23 @@ const ColorCodes = {
       height: 40,
       alignItems: 'center'
     },
+    hrow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor:'#fff',
+
+      width: (DEVICE_WIDTH) ,
+      height: 40,
+      alignItems: 'center'
+    },
     headtxt: {
-      fontSize: 15,
+      fontSize: 13,
       color: '#696969',
       width: ((DEVICE_WIDTH) / 4) - 10,
+  //    textAlign:'center'
     },
     bodytxt: {
-      fontSize: 14,
+      fontSize: 12,
       width: ((DEVICE_WIDTH) / 4) - 15
     },
     btnA: {
@@ -65,7 +74,8 @@ const ColorCodes = {
       alignItems: 'center',
     },
     btntxt: {
-      color: '#fff'
+      color: '#fff',
+      fontSize: 12,
     },
     text: {
       fontSize: 18,

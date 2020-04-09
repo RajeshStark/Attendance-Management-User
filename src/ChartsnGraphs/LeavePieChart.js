@@ -12,7 +12,7 @@ export default class LeavePieChart extends React.PureComponent {
         return (
             <View>
                 <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                    <Text style={{ fontSize: 18, padding: 10 }}>Leaves</Text>
+                    <Text style={{ fontSize: 22, padding: 10 }}>Leaves</Text>
                     <IconButton icon="file-download" size={25}/>
                 </View>
                 <View style={{

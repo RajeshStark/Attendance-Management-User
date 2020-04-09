@@ -1,77 +1,130 @@
-import React, { useState, useEffect } from "react";
-import { Button, Text, View, Dimensions, ImageBackground, StatusBar,Image } from 'react-native';
+import * as React from 'react';
+import { Button, Text, View, Dimensions, ImageBackground, StatusBar, Image, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
-//My inports
-import MyTabs from '../Navigation/BottomNavigation';
+
 import Splash from './Splash';
+import EntryStack from "../Navigation/EntryStack";
+
 
 const AuthContext = React.createContext();
 
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
+export function SignInScreen({navigation}) {
 
-function SignInScreen() {
-  const [dimensions, setDimensions] = useState({ window, screen });
-  const [username, setUsername] = React.useState('+91');
+  const [dimensions] = React.useState({ window, screen });
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const { signIn } = React.useContext(AuthContext);
+  function NavAction() {
+    
+    console.log("Token "+ AsyncStorage.getItem('User_Authkey'))
+
+    navigation.navigate('EntryStack');
+  }
+
+  function SignIn({ navigation }) {
+    fetch('http://myworkday.nutantek.com/empLogin.php', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: username,
+        user_password: password
+
+      }),
+    }).then((response) => response.json())
+      .then((responseJson) => {
+
+        let Auth = responseJson
+
+        if (Auth.message == "datamatched") {
+
+        
+          let Token = Auth.User_Authkey;
+          AsyncStorage.setItem('User_Authkey', Token);
+          NavAction()
+          // navigation.navigate('EntryStack');
+        }
+        else {
+          Alert.alert("Invalid User name or Password")
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
 
   return (
     <View >
-      <StatusBar  barStyle="dark-content" backgroundColor="#78C4E6"/>
-    <View style={{alignItems: 'center', height: (dimensions.window.height) }}>
-    <ImageBackground 
-    source={{uri: 'https://nutantek.com/images/home.jpg'}}
-    imageStyle={{width:(dimensions.window.width),height:(dimensions.window.width)/2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
-    style={{width:(dimensions.window.width),height:(dimensions.window.width)/2}}>
-    </ImageBackground>
-      <View style={{padding:30, marginTop:-80,backgroundColor:'#fff', width: (dimensions.window.width)-60 , height: (dimensions.window.width)-80 ,borderRadius:10,borderWidth:0.1}}>
-        <View style={{ paddingBottom: 10 }}>
-          <TextInput
-            placeholder="Mobile Number"
-            value={username}
-            onChangeText={setUsername}
-            type='outlined'
-            underlineColor='red'
-            style={{ backgroundColor: "transparent", height: 40 }}
-            keyboardType='numeric'
-          />
-        </View>
+      <StatusBar barStyle="dark-content" backgroundColor="#78C4E6" />
+      <View style={{ alignItems: 'center', height: (dimensions.window.height) }}>
+        <ImageBackground
+          source={{ uri: 'https://nutantek.com/images/home.jpg' }}
+          imageStyle={{ width: (dimensions.window.width), height: (dimensions.window.width) / 2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
+          style={{ width: (dimensions.window.width), height: (dimensions.window.width) / 2 }}>
+        </ImageBackground>
+        <View style={{ padding: 30, marginTop: -80, backgroundColor: '#fff', width: (dimensions.window.width) - 60, height: (dimensions.window.width) - 80, borderRadius: 10, borderWidth: 0.1 }}>
+          <View style={{ paddingBottom: 10 }}>
+            <TextInput
+              placeholder="User Id"
+              value={username}
+              onChangeText={setUsername}
+              type='outlined'
+              underlineColor='red'
+              style={{ backgroundColor: "transparent", height: 40 }}
+            // keyboardType='numeric'
+            />
+          </View>
 
-        <View style={{ paddingBottom: 10 }}>
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            type='outlined'
-            underlineColor='red'
-            style={{ backgroundColor: "transparent", height: 40 }}
-            keyboardType='numeric'
-          />
-        </View>
+          <View style={{ paddingBottom: 10 }}>
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              type='outlined'
+              underlineColor='red'
+              style={{ backgroundColor: "transparent", height: 40 }}
 
-        <Button title="Submit" onPress={() => signIn({ username, password })} />
-        <Text style={{fontSize:18,textAlign:'center',marginTop:10}}>Forgot Password ?</Text>
+            />
+          </View>
+
+          {/* <Button title="Submit" onPress={() => SignInScreen()} /> */}
+          <Button title="Submit" onPress={() => SignIn({ username, password })} />
+          <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 10 }}>Forgot Password ?</Text>
+        </View>
+        <Text style={{ fontSize: 18, textAlign: 'center' }}>Designed and developed By</Text>
+        <Image
+          source={require('../assets/logoNutantek.png')}
+          style={{ width: (dimensions.window.width) - 20, height: (dimensions.window.width) / 5 }}
+        />
       </View>
-      <Text style={{fontSize:18,textAlign:'center'}}>Designed and developed By</Text>
-    <Image 
-     source={require('../assets/logoNutantek.png')}
-     style={{width: (dimensions.window.width)-20,height: (dimensions.window.width)/5}}
-    />
-    </View> 
     </View>
+
   );
 }
 
 
+
+
+
+
+
+
+
+
+
 const Stack = createStackNavigator();
 
-export default function AuthScreen({ navigation }) {
+export default function Authentication({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -108,7 +161,7 @@ export default function AuthScreen({ navigation }) {
       let userToken;
 
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        userToken = await AsyncStorage.getItem('User_Authkey');
       } catch (e) {
         // Restoring token failed
       }
@@ -131,7 +184,8 @@ export default function AuthScreen({ navigation }) {
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', token: userToken });
+        //  dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
@@ -139,8 +193,8 @@ export default function AuthScreen({ navigation }) {
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
-
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: 'SIGN_IN', token: userToken });
+        // dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
     }),
     []
@@ -148,10 +202,7 @@ export default function AuthScreen({ navigation }) {
 
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <Stack.Navigator
-          headerMode="none"
-        >
+        <Stack.Navigator headerMode="none">
           {state.isLoading ? (
             // We haven't finished checking for the token yet
             <Stack.Screen name="Splash" component={Splash} />
@@ -168,10 +219,10 @@ export default function AuthScreen({ navigation }) {
             />
           ) : (
                 // User is signed in
-                <Stack.Screen name="Home" component={MyTabs} />
+                <Stack.Screen name="EntryStack" component={EntryStack} />
               )}
         </Stack.Navigator>
-      </NavigationContainer>
+
     </AuthContext.Provider>
   );
 }

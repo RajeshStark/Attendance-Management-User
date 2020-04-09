@@ -20,7 +20,7 @@ class RDataTable extends Component {
     return (
       <View style={styles.main}>
 
-        <View style={styles.row}>
+        <View style={styles.hrow}>
           <Text style={styles.headtxt}>Date</Text>
           <Text style={styles.headtxt}>Cloack Hrs</Text>
           <Text style={styles.headtxt}>Shortfall</Text>
@@ -97,7 +97,7 @@ class RDataTable extends Component {
               />
             </Dialog.Content>
             <Dialog.Actions>
-              <TouchableOpacity style={styles.touchable}
+              <TouchableOpacity style={styles.touchable} 
               onPress={this._hideDialog}>
                 <Text style={styles.touchabletext}>Submit</Text>
               </TouchableOpacity>

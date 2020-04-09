@@ -2,9 +2,16 @@ import React from 'react';
 import { View, Text, Dimensions,ScrollView , StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Appbar, Divider} from 'react-native-paper'
 import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Settings({ navigation }) {
+  
+  function LogOut(){
+    AsyncStorage.removeItem('User_Authkey');
+    const getItem = AsyncStorage.getItem('User_Authkey');
+    console.log('Should be null:', getItem);
+    navigation.navigate('SignInScreen');
+  }
   return (
     <View>
          <Appbar.Header style={{ backgroundColor: '#fff' }}>
@@ -35,7 +42,7 @@ export default function Settings({ navigation }) {
                     </TouchableOpacity>
                     <Divider style={styles.divider}/>
                     
-                    <TouchableOpacity style={styles.viewcontainer}>
+                    <TouchableOpacity style={styles.viewcontainer} onPress={LogOut}>
                        <MaterialCommunityIcons name="logout" size={25} color= '#000' />
                        <Text style={styles.txt}>Log Out</Text>
                     </TouchableOpacity>

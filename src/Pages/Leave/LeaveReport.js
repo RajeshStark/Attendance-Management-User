@@ -10,34 +10,59 @@ import styles from '../Regularize/DataStyles';
 const Pstyles = {
         row: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: (DEVICE_WIDTH) / 1.5,
+        paddingHorizontl: 20,
     },
     picker: {
-        width: (DEVICE_WIDTH) / 2
+        width: (DEVICE_WIDTH) / 2.8
     },
         
 }
 
-function PickerComponent() {
-    const [selectedValue, setSelectedValue] = useState("CMonth");
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function PickerYearComponent() {
+    const [selectedValue, setSelectedValue] = useState("CYear");
     var now = new Date();
-    var year = now.getFullYear();
-    var thisMonth = months[now.getMonth()];
+    var thisYear = now.getFullYear().toString();
+    var pYear = now.getFullYear()-1;
+    var lastYear = pYear.toString();
+    console.log(lastYear)
     return (
         <View>
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>{year}</Text>
-
-            <View style={Pstyles.row}>
-                <Text style={{ fontSize: 18 }}>Select Month :-</Text>
+            <View style={Pstyles.row}>  
                 <View>
                     <Picker
                         selectedValue={selectedValue}
                         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                         style={Pstyles.picker}
                     >
-                        <Picker.Item style={{ color: 'red', backgroundColor: 'blue' }} label={thisMonth} value="CMonth" />
+                        <Picker.Item label={thisYear} value="CYear" />
+                        <Picker.Item label={lastYear} value="jan" />
+                    </Picker>
+                </View>
+            </View>
+        </View>
+    );
+}
+
+
+function PickerComponent() {
+    const [selectedValue, setSelectedValue] = useState("CMonth");
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var now = new Date();
+    var thisMonth = months[now.getMonth()];
+    return (
+        <View>
+           
+                <View>
+                    <Picker
+                        selectedValue={selectedValue}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                        style={Pstyles.picker}
+                    >
+                        <Picker.Item label={thisMonth} value="CMonth" />
                         <Picker.Item label="January" value="jan" />
                         <Picker.Item label="February" value="feb" />
                         <Picker.Item label="March" value="mar" />
@@ -52,83 +77,12 @@ function PickerComponent() {
                         <Picker.Item label="December" value="dec" />
                     </Picker>
                 </View>
-            </View>
+       
         </View>
     );
 }
 
 
-class DataTableComponent extends React.Component {
-    render() {
-        return (
-            <ScrollView horizontal={true}>
-                <View style={styles.main}>
-                    <View style={styles.row}>
-                        <Text style={styles.headtxt}>From Date</Text>
-                        <Text style={styles.headtxt}>To Date</Text>
-                        <Text style={styles.headtxt}>Leave Type</Text>
-                        <Text style={styles.headtxt}>Status</Text>
-                    </View>
-                    <Divider style={{ backgroundColor: '#000' }} />
-
-                    <View style={styles.row}>
-                        <Text style={styles.bodytxt}>2/03/20</Text>
-                        <Text style={styles.bodytxt}>5/03/20</Text>
-                        <Text style={styles.bodytxt}>Casual Leave</Text>
-                        <TouchableOpacity
-                            style={styles.btnG}
-                            onPress={() => this.props.navigation.navigate('LeaveView')}
-                        >
-                            <Text style={styles.btntxt}> Approved </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Divider style={{ backgroundColor: '#000' }} />
-
-                    <View style={styles.row}>
-                        <Text style={styles.bodytxt}>22/03/20</Text>
-                        <Text style={styles.bodytxt}>22/03/20</Text>
-                        <Text style={styles.bodytxt}>Personal Leave</Text>
-                        <TouchableOpacity
-                            style={styles.btnG}
-                            onPress={() => this.props.navigation.navigate('LeaveView')}
-                        >
-                            <Text style={styles.btntxt}> Approved </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Divider style={{ backgroundColor: '#000' }} />
-
-                    <View style={styles.row}>
-                        <Text style={styles.bodytxt}>26/03/20</Text>
-                        <Text style={styles.bodytxt}>26/03/20</Text>
-                        <Text style={styles.bodytxt}>Personal Leave</Text>
-                        <TouchableOpacity
-                            style={styles.btnR}
-                            
-                        >
-                            <Text style={styles.btntxt}> Rejected </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Divider style={{ backgroundColor: '#000' }} />
-
-                    <View style={styles.row}>
-                        <Text style={styles.bodytxt}>28/03/20</Text>
-                        <Text style={styles.bodytxt}>31/03/20</Text>
-                        <Text style={styles.bodytxt}>Sick Leave</Text>
-                        <TouchableOpacity
-                            style={styles.btnP}
-                            
-                        >
-                            <Text style={styles.btntxt}> Pending </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Divider style={{ backgroundColor: '#000' }} />
-
-
-                </View>
-            </ScrollView>
-        );
-    }
-}
 
 export default class LeaveReport extends Component {
     render() {
@@ -149,7 +103,11 @@ export default class LeaveReport extends Component {
                     />
                 </Appbar.Header>
                 <View>
+                <View style={Pstyles.row}>
+                   
+                <PickerYearComponent />
                     <PickerComponent />
+                </View>
                     <ScrollView horizontal={true}>
                 <View style={styles.main}>
                     <View style={styles.row}>
