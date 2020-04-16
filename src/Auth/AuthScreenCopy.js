@@ -9,7 +9,6 @@ import Splash from './Splash';
 import EntryStack from "../Navigation/EntryStack";
 
 
-
 const AuthContext = React.createContext();
 
 const window = Dimensions.get("window");
@@ -23,9 +22,9 @@ export function SignInScreen({navigation}) {
 
   function NavAction() {
     
-   // console.log("NavAction Token Values "+AsyncStorage.getItem('emp_id')+" "+AsyncStorage.getItem('User_Authkey'))
+    console.log(" NavAction Token "+ AsyncStorage.getItem('User_Authkey'))
 
-    navigation.navigate('EntryStack');
+    navigation.navigate('SignIn');
   }
 
   function SignIn({ navigation }) {
@@ -51,7 +50,7 @@ export function SignInScreen({navigation}) {
         
           let Token = Auth.User_Authkey;
           let ID = Auth.emp_id;
-          // console.log("ID " + ID, "UserAuthKey "+ Token)
+          console.log("ID " + ID, "UserAuthKey "+ Token)
 
           AsyncStorage.setItem('User_Authkey', Token);
           AsyncStorage.setItem('emp_id', ID);
@@ -120,7 +119,6 @@ export function SignInScreen({navigation}) {
 }
 
 const Stack = createStackNavigator();
-
 
 export default function Authentication({ navigation }) {
   const [state, dispatch] = React.useReducer(

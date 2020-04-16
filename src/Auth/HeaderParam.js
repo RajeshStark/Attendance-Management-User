@@ -11,33 +11,39 @@ class HeaderParam extends Component {
   }
 
   componentDidMount(){
-    return fetch('http://myworkday.nutantek.com/empViewProfile.php?emp_id=102', {
+    return fetch('http://myworkday.nutantek.com/emp_attandancemonthwise.php?emp_id=102', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: "A12",
         }
     }).then((response) => response.json())
-
-        .then((responseJson) => {
-           
-            console.log(' current')
-            console.log('response',responseJson)
+    .then((responseJson)=> {
+        console.log("response "+responseJson)
+        this.setState({
+         dataSource: responseJson
         })
+    })
+        // .then((responseJson) => {
+           
+        //     console.log(' current')
+        //     console.log('response',responseJson)
+        // })
         .catch((error) => {
             console.error(error);
         });
-};
+}
+
 
  
     render() {
         return (
             <View>
+                <Text>HII</Text>
              <FlatList
           data={this.state.dataSource}
           renderItem={({item}) =>
           <View>
-              <Image source={{uri: item.emp_profile}} style={{height:100, width:100}} />
               <Text >{item.emp_fname} </Text>
               <Text >{item.emp_profile}</Text>
               <Text >{item.user_role} </Text> 
@@ -45,28 +51,7 @@ class HeaderParam extends Component {
 
           }
         />
-                <View style={{ paddingBottom: 10 }}>
-                    <TextInput
-                        placeholder="User Id"
-                        type='outlined'
-                        underlineColor='red'
-                        style={{ backgroundColor: "transparent", height: 40 }}
-                    />
-                </View>
-
-                <View style={{ paddingBottom: 10 }}>
-                    <TextInput
-                        placeholder="Password"
-                        type='outlined'
-                        underlineColor='red'
-                        style={{ backgroundColor: "transparent", height: 40 }}
-
-                    />
-                </View>
-                <Button title="submit" onPress={this.submit} />
-                <Text> {
-             
-              }</Text>
+                
             </View>
         )
     }

@@ -5,12 +5,46 @@ import DashboardStyles from './Styles'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MarkAttendance from '../../Pages/DashBoard/MarkAttendance'
 import AttendanceGraph from '../../ChartsnGraphs/AttendanceGraph'
-import { IconButton, Button } from 'react-native-paper'
+import { IconButton } from 'react-native-paper'
 import BellIcon from '../../Components/Bellicon'
+import AsyncStorage from '@react-native-community/async-storage';
+import MainProfileData from '../../Services/Dashboard/MainProfile.data'
 
 
 export default class DashboardMain extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      userInfo: [],
+      // User_Authkey:'',
+      
+    } 
+  }
+
+  
+  async componentDidMount() {
+   
+    const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+    const emp_id = await AsyncStorage.getItem('emp_id');
+
+    console.log("Token from Dashboard "+" user authkey "+  User_Authkey + " ID " + emp_id)
+
+    return fetch('http://myworkday.nutantek.com/empViewProfile.php?emp_id='+emp_id ,{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          Authorization: User_Authkey,
+      }
+  }).then((response) => response.json())
+  .then(data => this.setState({ userInfo: data}))
+      .catch((error) => {
+          console.error(error);
+      });
+};
+
   render() {
+ const User = this.state.userInfo;
+ console.log(User)
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -21,13 +55,12 @@ export default class DashboardMain extends Component {
            <BellIcon navigation={this.props.navigation.navigate}/>
           </View>
           <View style={DashboardStyles.ViewStyle}>
-            
             <Image
-              source={{ uri: 'https://i.ya-webdesign.com/images/funny-png-avatar-2.png' }}
-              style={{ height: 100, width: 100 }}
+              source={{ uri: (User.emp_profile) }}
+              style={{ height: 120, width: 120 , borderRadius:30}}
             />
-            <Text style={{ fontSize: 20, color: '#fff' }}>Rajesh Sangapogu</Text>
-            <Text style={{ fontSize: 16, color: '#fff' }}>React Native Developer</Text>
+            <Text style={{ fontSize: 20, color: '#fff' }}>{User.emp_fname}</Text>
+            <Text style={{ fontSize: 16, color: '#fff' }}>{User.user_role}</Text>
             <Text style={{ fontSize: 16, color: '#fff' }}>Nutantek Solutions</Text>
           </View>
           <MarkAttendance />
@@ -42,7 +75,7 @@ export default class DashboardMain extends Component {
 
             </View>
             <View style={{ marginBottom:10 }}>
-              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Weekly Avg :- </Text>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Weekly Avg : </Text>
               <TouchableOpacity style={{  paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
               <Text style={{ fontSize: 14, paddingLeft: 10 }}>08:30 Hrs :  </Text>
               <IconButton icon="thumb-down-outline" color="#f0ad4e" size={20}/>
@@ -50,7 +83,7 @@ export default class DashboardMain extends Component {
               </TouchableOpacity>
             </View>
             <View style={{ marginBottom:10 }}>
-              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Monthly Avg :- </Text>
+              <Text style={{ fontSize: 14, paddingLeft: 10 }}>Monthly Avg : </Text>
               <TouchableOpacity style={{  paddingLeft:10, flexDirection: 'row', alignItems:'center' }}  onPress={() => this.props.navigation.navigate('AttendanceReport')}>
               <Text style={{ fontSize: 14, paddingLeft: 10 }}>45:30 Hrs :  </Text>
               <IconButton icon="thumb-up-outline" color="#5cb85c" size={20}/>

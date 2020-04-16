@@ -1,117 +1,117 @@
-import React, { Component } from 'react'
-import { Text, View, Button, Image, Dimensions, StatusBar ,ImageBackground, Alert } from 'react-native'
+import * as React from 'react';
+import { Button, Text, View, Dimensions, ImageBackground, StatusBar, Image, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import Splash from './Splash';
+import EntryStack from "../Navigation/EntryStack";
 
 
-class LogIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user_id: '',
-      user_password: ''
-    } 
-  }
-  // data = { user_id:this.user_id,
-  //   user_password:this.user_password}
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
+
+export default function SignInScreen({navigation}) {
+
+  const [dimensions] = React.useState({ window, screen });
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  function NavAction() {
     
+    console.log(" NavAction Token "+ AsyncStorage.getItem('User_Authkey'))
 
-  submit = () => {
-    const { user_id }  = this.state ;
-    const { user_password }  = this.state ;
+    navigation.navigate('EntryStack');
+  }
 
-    console.log(" user_id " + user_id)
-    return fetch('http://myworkday.nutantek.com/empLogin.php', {
+  function SignIn({ navigation }) {
+    fetch('http://myworkday.nutantek.com/empLogin.php', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: user_id,
-        user_password: user_password
-       
+        user_id: username,
+        user_password: password
+
       }),
-      }).then((response) => response.json())
-        .then((responseJson) => {
-          // console.log(responseJson)
-          let Auth = responseJson
+    }).then((response) => response.json())
+      .then((responseJson) => {
+     
+        let Auth = responseJson
+        console.log(Auth)
 
-          if( Auth.message == "datamatched"){
-             this.props.navigation.navigate('BottomTabs')
-          }
-         else {
-           Alert.alert("Invalid User name or Password")
-         }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-  };
+        if (Auth.message == "datamatched") {
 
-    render() {
-        return (
-            <View>
-               <View >
-      <StatusBar  barStyle="dark-content" backgroundColor="#78C4E6"/>
-    <View style={{alignItems: 'center', height: (DEVICE_WIDTH) }}>
-    <ImageBackground 
-    source={{uri: 'https://nutantek.com/images/home.jpg'}}
-    imageStyle={{width:(DEVICE_WIDTH),height:(DEVICE_WIDTH)/2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
-    style={{width:(DEVICE_WIDTH),height:(DEVICE_WIDTH)/2}}>
-    </ImageBackground>
-      <View style={{padding:30, marginTop:-80,backgroundColor:'#fff', width: (DEVICE_WIDTH)-60 , height: (DEVICE_WIDTH)-80 ,borderRadius:10,borderWidth:0.1}}>
-        <View style={{ paddingBottom: 10 }}>
-          <TextInput
-            placeholder="Employee Id"
-            // value={username}
-            onChangeText={user_id => this.setState({user_id})}
-            type='outlined'
-            underlineColor='red'
-            style={{ backgroundColor: "transparent", height: 40 }}
-           // keyboardType='numeric'
-          />
+        
+          let Token = Auth.User_Authkey;
+          let ID = Auth.emp_id;
+          console.log("ID " + ID, "UserAuthKey "+ Token)
+
+          AsyncStorage.setItem('User_Authkey', Token);
+          AsyncStorage.setItem('emp_id', ID);
+          
+          NavAction()
+          // navigation.navigate('EntryStack');
+        }
+        else {
+          Alert.alert("Invalid User name or Password")
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
+
+  return (
+    <View >
+      <StatusBar barStyle="dark-content" backgroundColor="#78C4E6" />
+      <View style={{ alignItems: 'center', height: (dimensions.window.height) }}>
+        <ImageBackground
+          source={{ uri: 'https://nutantek.com/images/home.jpg' }}
+          imageStyle={{ width: (dimensions.window.width), height: (dimensions.window.width) / 2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
+          style={{ width: (dimensions.window.width), height: (dimensions.window.width) / 2 }}>
+        </ImageBackground>
+        <View style={{ padding: 30, marginTop: -80, backgroundColor: '#fff', width: (dimensions.window.width) - 60, height: (dimensions.window.width) - 80, borderRadius: 10, borderWidth: 0.1 }}>
+          <View style={{ paddingBottom: 10 }}>
+            <TextInput
+              placeholder="User Id"
+              value={username}
+              onChangeText={setUsername}
+              type='outlined'
+              underlineColor='red'
+              style={{ backgroundColor: "transparent", height: 40 }}
+            // keyboardType='numeric'
+            />
+          </View>
+
+          <View style={{ paddingBottom: 10 }}>
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              type='outlined'
+              underlineColor='red'
+              style={{ backgroundColor: "transparent", height: 40 }}
+
+            />
+          </View>
+
+          {/* <Button title="Submit" onPress={() => SignInScreen()} /> */}
+          <Button title="Submit" onPress={() => SignIn({ username, password })} />
+          <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 10 }}>Forgot Password ?</Text>
         </View>
-
-        <View style={{ paddingBottom: 10 }}>
-          <TextInput
-            placeholder="Password"
-            // value={password}  
-            onChangeText={user_password => this.setState({user_password})}
-            type='outlined'
-            underlineColor='red'
-            style={{ backgroundColor: "transparent", height: 40 }}
-            
-          />
-        </View>
-
-        <Button title="Submit"  onPress={this.submit}/>
-        <Text style={{fontSize:18,textAlign:'center',marginTop:10}}>Forgot Password ?</Text>
+        <Text style={{ fontSize: 18, textAlign: 'center' }}>Designed and developed By</Text>
+        <Image
+          source={require('../assets/logoNutantek.png')}
+          style={{ width: (dimensions.window.width) - 20, height: (dimensions.window.width) / 5 }}
+        />
       </View>
-      <Text style={{fontSize:18,textAlign:'center'}}>Designed and developed By</Text>
-    <Image 
-     source={require('../assets/logoNutantek.png')}
-     style={{width: (DEVICE_WIDTH)-20,height: (DEVICE_WIDTH)/5}}
-    />
-    </View> 
     </View>
-            </View>
-        )
-    }
+
+  );
 }
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
-
-export default LogIn
-
-// function HomeScreen({ navigation }) {
-//   return (
-//         navigation.navigate('Details')
-//   );
-// }
-
-// export default function ({props}) {
-//   const navigation = useNavigation();
-
-//   return <LogIn {...props} navigation={navigation} />;
-// }

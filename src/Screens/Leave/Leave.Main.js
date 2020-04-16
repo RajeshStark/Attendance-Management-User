@@ -12,7 +12,7 @@ import PickingTime from '../../Pages/Leave/TimePicker';
 export default class LeaveMain extends Component {
     render() {
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
                     <LeavePieChart />
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>

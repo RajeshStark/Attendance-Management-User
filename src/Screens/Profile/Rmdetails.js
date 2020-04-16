@@ -18,7 +18,7 @@ class RmDetails extends React.Component {
                       <Text style={styles.text}>+91-9876543210</Text>
                 </View>
                 </View>
-            </View>
+            </View> 
         );
     }
 }

@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { IconButton, Colors, Checkbox } from 'react-native-paper';
 import GlobalStyles from '../../Styles/MainStyles';
 
-const PickingDate = () => {
+const PickingDate = (props) => {
     return(
       <View>
       <View style={styles.mainrow}>
@@ -17,7 +17,7 @@ const PickingDate = () => {
   }
   export default  PickingDate;
 
-const FromDatePicker = () => {
+const FromDatePicker = (props) => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -36,7 +36,7 @@ const FromDatePicker = () => {
     setMode(currentMode);
   };
 
-  const showFDatepicker = () => {
+  const showFDatepicker = (props) => {
     showMode('date');
   };
 

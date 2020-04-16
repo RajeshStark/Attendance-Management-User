@@ -1,23 +1,56 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, TextInput , FlatList} from 'react-native';
 import { Button, Paragraph, Dialog, Portal, Divider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../DataStyles';
+import RegulrizeData from '../../../Services/Regularize/RegularizeData';
 
-class RDataTable extends Component {
+class RDataTable extends Component { 
+  constructor(props) {
+    super(props);
+    this.state = { 
+      userInfo: [],
+      visible: false,
+      // User_Authkey:'',
+      
+    } 
+  }
 
-  state = {
-    visible: false,
-  };
 
-  _showDialog = () => this.setState({ visible: true });
+//   async componentDidMount() {
+   
+//     const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+//     const emp_id = await AsyncStorage.getItem('emp_id');
 
-  _hideDialog = () => this.setState({ visible: false });
+//     console.log("Token from Dashboard "+" user authkey "+  User_Authkey + " ID " + emp_id)
 
-  render() {
+//     return fetch('http://myworkday.nutantek.com/emp_regularizationview.php?emp_id='+emp_id ,{
+//       method: 'GET',
+//       headers: {
+//           'Content-Type': 'application/json',
+//           Authorization: User_Authkey,
+//       }
+//   }).then((response) => response.json())
+//   // .then((json) => {
+//   //   return json.data 
+//   // })
+//   // .then(json => console.log( " response "+ json))
+//  .then(data => this.setState({ userInfo: data}))
+//       .catch((error) => {
+//           console.error(error);
+//       });
+// };
+
+
+  // _showDialog = () => this.setState({ visible: true });
+
+  // _hideDialog = () => this.setState({ visible: false });
+
+  render() { 
 
     return (
+    
       <View style={styles.main}>
 
         <View style={styles.hrow}>
@@ -27,87 +60,39 @@ class RDataTable extends Component {
           <Text style={styles.headtxt}>Regularize</Text>
         </View>
         <Divider style={{ backgroundColor: '#000' }} />
-
+        <FlatList
+      data={RegulrizeData}
+      // data={this.state.userInfo}
+      renderItem={({ item }) =>
+      <View>
         <View style={styles.row}>
-          <Text style={styles.bodytxt}>25/03/20</Text>
-          <Text style={styles.bodytxt}>08:00</Text>
-          <Text style={styles.bodytxt}>01:30</Text>
+          <Text style={styles.bodytxt}>{item.check_in_date}</Text>
+          <Text style={styles.bodytxt}>{item.Cloack_hrs}</Text>
+          <Text style={styles.bodytxt}>{item.shortfall_hrs}</Text>
           <TouchableOpacity
-            style={styles.btnA}
-            onPress={this._showDialog}
+            style={ [ (item.rm_comments == "Apply")? styles.btnA : (item.rm_comments == "Approved")? styles.btnG  : (item.rm_comments == "Rejected")? styles.btnR : (item.rm_comments == "Pending")? styles.btnP : ""]}
+           
+            onPress= {()=>
+              {
+                 let destination = (item.rm_comments === "Apply")? "regularizeApply" : (item.rm_comments === "Rejected") ? "regularizeEdit" : (item.rm_comments === "Approved" || "Pending") ? "regularizeView" : ""
+                 this.props.navigation.navigate(destination,{
+                   check_in_date : (item.check_in_date),
+                   shortfall_hrs : (item.shortfall_hrs), 
+                   rm_comments : (item.rm_comments)
+                 });
+               } 
+          }
           >
-            <Text style={styles.btntxt}> Apply </Text>
+            <Text style={styles.btntxt}> {item.rm_comments} </Text>
           </TouchableOpacity>
         </View>
         <Divider style={{ backgroundColor: '#000' }} />
-
-        <View style={styles.row}>
-          <Text style={styles.bodytxt}>26/03/20</Text>
-          <Text style={styles.bodytxt}>08:00</Text>
-          <Text style={styles.bodytxt}>01:30</Text>
-          <TouchableOpacity
-            style={styles.btnG}
-            onPress={() => this.props.navigation.navigate('regularizeView')}
-          >
-            <Text style={styles.btntxt}> Approved </Text>
-          </TouchableOpacity>
-        </View>
-        <Divider style={{ backgroundColor: '#000' }} />
-
-        <View style={styles.row}>
-          <Text style={styles.bodytxt}>27/03/20</Text>
-          <Text style={styles.bodytxt}>08:00</Text>
-          <Text style={styles.bodytxt}>01:30</Text>
-          <TouchableOpacity
-            style={styles.btnR}
-            onPress={() => this.props.navigation.navigate('regularizeApply')}
-          >
-            <Text style={styles.btntxt}> Rejected </Text>
-          </TouchableOpacity>
-        </View>
-        <Divider style={{ backgroundColor: '#000' }} />
-
-        <View style={styles.row}>
-          <Text style={styles.bodytxt}>28/03/20</Text>
-          <Text style={styles.bodytxt}>08:00</Text>
-          <Text style={styles.bodytxt}>01:30</Text>
-          <TouchableOpacity
-            style={styles.btnP}
-            onPress={() => this.props.navigation.navigate('regularizeView')}
-          >
-            <Text style={styles.btntxt}> Pending </Text>
-          </TouchableOpacity>
-        </View>
-        <Divider style={{ backgroundColor: '#000' }} />
-
-        <Portal>
-          <Dialog
-            visible={this.state.visible}
-            onDismiss={this._hideDialog}>
-            <Dialog.Title>Apply For Regularization</Dialog.Title>
-            <Dialog.Content>
-              <Text style={styles.text}>Date : 26/03/20</Text>
-              <Text style={styles.text}>Shortfall : 1 hr</Text>
-              <Text style={styles.text}>Justification :</Text>
-              <TextInput
-                style={styles.textinput}
-                multiline={true}
-                textAlignVertical="top"
-                type='outlined'
-              />
-            </Dialog.Content>
-            <Dialog.Actions>
-              <TouchableOpacity style={styles.touchable} 
-              onPress={this._hideDialog}>
-                <Text style={styles.touchabletext}>Submit</Text>
-              </TouchableOpacity>
-              <Button onPress={this._hideDialog}><Text style={{color:'#2B65EC'}}>Cancel</Text></Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
-
-
+      </View> 
+          }
+          keyExtractor={item => item.id}
+        />
       </View>
+     
     )
   }
 }

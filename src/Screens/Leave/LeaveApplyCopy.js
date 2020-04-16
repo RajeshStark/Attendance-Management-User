@@ -1,111 +1,124 @@
-import React, { useState } from 'react'
+import React, { Component, useState } from 'react'
 import { Text, View, KeyboardAvoidingView, StyleSheet, ToastAndroid, Dimensions, TouchableOpacity, TextInput, Picker } from 'react-native'
 import { Checkbox } from 'react-native-paper';
 import GlobalStyles from '../../Styles/MainStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-export default function LeaveApply (){
-    const [isSelected, setSelection] = useState(false);
-    const [isSelected1, setSelection1] = useState(false);
-    const [pickerValue, setPickerValue] = useState("Casual Leave");
-    const [text, onChangeText] = useState('');
+export default class LeaveApply extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = { 
+            Fchecked: false,
+            Tchecked: false,
+            leaveType: ""
+        } 
+      }
 
-  const submit =  async  ()  => {
- console.log("reason  " + text) 
-        var DATA =   JSON.stringify({
-               leave_from_date:"2020:02:06",
-               leave_from_time:"11:05",
-               leave_to_date  :"2020:02:08",
-               leave_to_time  :"4:00PM",
-               leave_no_days  :"2 DAYS",
-               leave_reason   : pickerValue
-           })
-   
-            console.log("Submitted")
-            const User_Authkey = await AsyncStorage.getItem('User_Authkey');
-            const emp_id = await AsyncStorage.getItem('emp_id');
-            console.log("Token CheckIn LeaveApply "+" user authkey "+ User_Authkey + " ID " + emp_id)
-            return fetch('http://myworkday.nutantek.com/emp_applyforleave.php?emp_id='+emp_id ,{
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: User_Authkey,
-              },
-               body: DATA
-   
-          }).then((response) => response.text())
-          .then((responseJson) => {
-            console.log(responseJson)
-                   if(responseJson == `1"recived"`){
-                    ToastAndroid.show('Submitted Successfuly', ToastAndroid.LONG);
-                   }
-                   else{
-                    ToastAndroid.show('Try Again', ToastAndroid.LONG);
-                   }
+     
+    async submit ()  {
+
+     var DATA =   JSON.stringify({
+            leave_from_date:"2020:02:06",
+            leave_from_time:"11:05",
+            leave_to_date  :"2020:02:08",
+            leave_to_time  :"4:00PM",
+            leave_no_days  :"2 DAYS",
+            leave_reason   : "leaveType"
         })
-              .catch((error) => {
-                  console.error(error);
-              });
-          
-       }
 
-    return(
-         <View>
+         console.log("Submitted")
+         const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+         const emp_id = await AsyncStorage.getItem('emp_id');
+         console.log("Token CheckIn LeaveApply "+" user authkey "+ User_Authkey + " ID " + emp_id)
+    // console.log("leavetype "+ this.state.leaveType)
+         return fetch('http://myworkday.nutantek.com/emp_applyforleave.php?emp_id='+emp_id ,{
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json',
+               Authorization: User_Authkey,
+           },
+            body: DATA
+
+       }).then((response) => response.text())
+       .then((responseJson) => {
+         console.log(responseJson)
+                if(responseJson == `1"recived"`){
+                 ToastAndroid.show('Submitted Successfuly', ToastAndroid.LONG);
+                }
+                else{
+                 ToastAndroid.show('Try Again', ToastAndroid.LONG);
+                }
+     })
+           .catch((error) => {
+               console.error(error);
+           });
+     
+       
+    }
+    render() {
+        const { Fchecked, Tchecked } = this.state;
+        return (
+            <View>
                 <KeyboardAvoidingView>
                     <View >
                         <View style={styles.row}>
                             <View style={styles.row}>
                                 <Text style={styles.text}>Half Day</Text>
                                 <Checkbox
-                                    status={isSelected ? 'checked' : 'unchecked'}
-                                    onPress={setSelection}
+                                    status={Fchecked ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ Fchecked: !Fchecked }); }}
                                 />
                             </View>
                             <View style={styles.row}>
                                 <Text style={styles.text}>Half Day</Text>
                                 <Checkbox
-                                    status={isSelected1 ? 'checked' : 'unchecked'}
-                                    // onPress={() => setSelection1 ? 'unchecked' : 'checked'}
+                                    status={Tchecked ? 'checked' : 'unchecked'}
+                                    onPress={() => { this.setState({ Tchecked: !Tchecked }); }}
                                 />
                             </View>
                         </View>
                         <View style={{marginLeft:20}}>
                         <View style={styles.row}>
           <Text style={{fontSize:18}}>Leave Type :-</Text>
-          <Picker
-        selectedValue={pickerValue}
-        style={styles.picker}
-        onValueChange={(itemValue, itemIndex) => setPickerValue(itemValue)}
-      >
-        <Picker.Item label="Casual Leave" value="Casual Leave" />
-          <Picker.Item label="Personal Leave" value="Personal Leave" />
-          <Picker.Item label="Sick Leave" value="Sick Leave" />
-          <Picker.Item label="Business Leave" value="Business Leave" />
-      </Picker>
+        <Picker
+          style={styles.picker}
+          selectedValue={this.state.leaveType}
+          onValueChange={
+            (itemValue, itemIndex) => 
+             this.setState({ 
+         //    PickerValue: itemValue,
+             leaveType: itemValue
+          }) 
+        }
+        >
+          <Picker.Item label="Casual Leave" value="CL" />
+          <Picker.Item label="Personal Leave" value="PL" />
+          <Picker.Item label="Sick Leave" value="SL" />
+          <Picker.Item label="Business Leave" value="BL" />
+        </Picker>
       </View>
                         </View>
                         <Text style={styles.text}>Notes :</Text>
                         <TextInput
                             style={styles.textinput}
                             multiline={true}
-                            onChangeText={text => onChangeText(text)}
-                            value={text}
                             textAlignVertical="top"
                             type='outlined'
                         />
-                        
+
                         <View style={GlobalStyles.center}>
-                            <TouchableOpacity style={styles.touchable} onPress={submit}>
+                            <TouchableOpacity style={styles.touchable} onPress={this.submit}>
                                 <Text style={styles.touchabletext}>Submit</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
             </View>
-    )
+        )
+    }
 }
-
 
 
 const DEVICE_WIDTH = Dimensions.get('window').width;

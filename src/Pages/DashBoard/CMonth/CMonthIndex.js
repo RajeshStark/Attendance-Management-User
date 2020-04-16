@@ -1,79 +1,83 @@
 import React, { Component } from 'react';
-import { Text, View , Dimensions, StyleSheet} from 'react-native';
-import {IconButton, DataTable} from 'react-native-paper';
-
-
+import { Text, View, Dimensions, Platform, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { IconButton, Divider } from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
+import styles from '../../Regularize/DataStyles'
+import AttendanceReportData from '../../../Services/Dashboard/AttendanceReportData';
 export default class CMonthIndex extends Component {
-    render() {
-        return (
-            <View>
-                     <View>
-          <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-            <Text style={{fontSize:20,padding:10}}>Your Attendance:- </Text>
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: []
+    }
+  }
+
+  //  async componentDidMount(){
+  //     const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+  //     const emp_id = await AsyncStorage.getItem('emp_id');
+  //     console.log("Token from AttenceReport "+" user authkey "+ User_Authkey + " ID " + emp_id)
+
+  //     return fetch('http://myworkday.nutantek.com/emp_attandancemonthwise.php?emp_id='+emp_id, {
+  //         method: 'POST',
+  //         headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: User_Authkey, 
+  //         }
+  //     }).then((response) => response.json())
+  //     //   .then((json) => {
+  //     //     return json.data 
+  //     //   })
+  //     .then(data => this.setState({ data: data }))
+  //     .catch((error) => {
+  //         console.error(error);
+  //     }); //to catch the errors if any
+  //     }
+
+
+
+  render() {
+    console.log("this.state.dataSource " + this.state.dataSource)
+    return (
+      <View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 20, padding: 10 }}>Your Attendance:- </Text>
             <IconButton
               icon="file-excel"
               size={25}
               onPress={() => console.log('Pressed')}
             />
           </View>
-          <DataTable>
-            <DataTable.Header>
-              <DataTable.Title>Date</DataTable.Title>
-              <DataTable.Title numeric>Check In</DataTable.Title>
-              <DataTable.Title numeric>Check Out</DataTable.Title>
-              <DataTable.Title numeric>Cloack Hrs</DataTable.Title>
-            </DataTable.Header>
+          <View style={styles.main}>
 
-            <DataTable.Row>
-              <DataTable.Cell>18/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>07:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.great}>09:00 hrs</DataTable.Cell>
-            </DataTable.Row>
+            <View style={styles.hrow}>
+              <Text style={styles.headtxt}>Date</Text>
+              <Text style={styles.headtxt}>CheckIn</Text>
+              <Text style={styles.headtxt}>CheckOut</Text>
+              <Text style={styles.headtxt}>Cloack Hrs</Text>
+            </View>
+            <Divider style={{ backgroundColor: '#000' }} />
+            <FlatList
+            data={AttendanceReportData}
+            // data={this.state.data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <View style={styles.row}>
+                  <Text style={styles.bodytxt}>{item.Date}</Text>
+                  <Text style={styles.bodytxt}>{item.CheckIn}</Text>
+                  <Text style={styles.bodytxt}>{item.CheckOut}</Text>
+                  <TouchableOpacity
+                    style={styles.btnG}
+                  >
+                    <Text style={styles.btntxt}> {item.Cloack_hrs} </Text>
+                  </TouchableOpacity>
+            </View>
+            )}
+          />
+           
 
-            <DataTable.Row>
-              <DataTable.Cell>19/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>06:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.sLag}>08:00 hrs</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>20/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>07:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.great}>09:00 hrs</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>21/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>07:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.great}>09:00 hrs</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>22/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>05:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.lagging}>07:00 hrs</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>23/3/2020</DataTable.Cell>
-              <DataTable.Cell numeric>10:00 am</DataTable.Cell>
-              <DataTable.Cell numeric>07:00 pm</DataTable.Cell>
-              <DataTable.Cell numeric style={styles.great}>09:00 hrs</DataTable.Cell>
-            </DataTable.Row>
-
-            {/* <DataTable.Pagination
-          page={1}
-          numberOfPages={3}
-          onPageChange={(page) => { console.log(page); }}
-          label="1-2 of 6"
-        /> */}
-          </DataTable>
-        </View>
+          </View>
       </View>
     )
   }
@@ -90,7 +94,7 @@ const ColorCodes = {
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const styles = StyleSheet.create({
+const Instyles = StyleSheet.create({
   lagging: {
     backgroundColor: ColorCodes.red,
     marginLeft: 20,

@@ -7,17 +7,15 @@ import EntryStack from './EntryStack';
 
 
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator(); 
 
 function RootStack() {
   return (
-    <NavigationContainer>
     <Stack.Navigator headerMode="none" mode="card" >
       <Stack.Screen name="AuthScreen" component={Authentication} />
       <Stack.Screen name="SignInScreen" component={SignInScreen} />
       <Stack.Screen name="EntryStack" component={EntryStack} />
     </Stack.Navigator>
-    </NavigationContainer>
   );
 }
 

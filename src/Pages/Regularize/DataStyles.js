@@ -38,7 +38,7 @@ const ColorCodes = {
     headtxt: {
       fontSize: 13,
       color: '#696969',
-      width: ((DEVICE_WIDTH) / 4) - 10,
+      width: ((DEVICE_WIDTH) / 4) - 20,
   //    textAlign:'center'
     },
     bodytxt: {
@@ -82,8 +82,9 @@ const ColorCodes = {
       marginLeft: 10,
       padding: 10
     },
+
     textinput: {
-      width: (DEVICE_WIDTH) / 1.5,
+      width: (DEVICE_WIDTH)-20,
       marginLeft: 10,
       backgroundColor: 'transparent',
       borderWidth: 0.5,
@@ -95,6 +96,20 @@ const ColorCodes = {
   
       color: '#fff',
   
+    },
+    submit: {
+      width: (DEVICE_WIDTH)-20,
+      justifyContent: 'center',
+      backgroundColor: '#2B65EC',
+      alignItems: 'center',
+      margin: 10,
+      padding: 10,
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 0.8,
+      },
     },
     touchable: {
       width: 100,
@@ -109,7 +124,14 @@ const ColorCodes = {
         width: 0,
         height: 0.8,
       },
-    }
+    },
+    viewContainer:{
+      borderRadius:5,
+      borderColor:'#000',
+      borderWidth:0.5,
+      margin:10,
+      padding :10
+  },
   
   });   
 

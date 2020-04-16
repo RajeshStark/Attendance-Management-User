@@ -10,7 +10,7 @@ export default function Settings({ navigation }) {
     AsyncStorage.removeItem('User_Authkey');
     const getItem = AsyncStorage.getItem('User_Authkey');
     console.log('Should be null:', getItem);
-    navigation.navigate('SignInScreen');
+    navigation.navigate('SignInScreen'); 
   }
   return (
     <View>

@@ -8,7 +8,7 @@ import { IconButton, Button } from 'react-native-paper'
 export default class PIndex extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={{ fontSize: 18,margin:10}}>Regularization Status</Text>

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Appbar, Button } from 'react-native-paper'; 
 import Geolocation from 'react-native-geolocation-service';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class MarkAttendance extends Component {
@@ -74,21 +74,21 @@ export default class MarkAttendance extends Component {
         (position) => {
           this.setState({ location: position, loading: false });
          // console.log(Math.floor(position.coords.latitude * 10000) / 10000)
-          if (Math.floor(position.coords.latitude * 10000) / 10000 == "17.5164") {
+          // if (Math.floor(position.coords.latitude * 10000) / 10000 == "17.5164") {
 
-            // ToastAndroid.show('You Are In NutanTek', ToastAndroid.LONG);
-            this.setState({
-              nowArea: 'You Are Within Range Of Nutantek',
-              checkOut:true
-            })
-          } else {
-            // ToastAndroid.show('You Are Not In NutanTek', ToastAndroid.LONG);
-            this.setState({
-              nowArea: 'You Are Not In Range Of Nutantek',
-              checkIn:true,
-              checkOut:true
-            })
-          }
+          //   // ToastAndroid.show('You Are In NutanTek', ToastAndroid.LONG);
+          //   this.setState({
+          //     nowArea: 'You Are Within Range Of Nutantek',
+          //     checkOut:true
+          //   })
+          // } else {
+          //   // ToastAndroid.show('You Are Not In NutanTek', ToastAndroid.LONG);
+          //   this.setState({
+          //     nowArea: 'You Are Not In Range Of Nutantek',
+          //     checkIn:true,
+          //     checkOut:true
+          //   })
+          // }
   
         },
         (error) => {
@@ -101,13 +101,60 @@ export default class MarkAttendance extends Component {
   }
 
   // Handling CheckIn
-  CheckinHandler = () => {
-    this.setState({checkIn:true,checkOut:false})
+ async CheckinHandler ()  {
+   // this.setState({checkIn:true,checkOut:false})
+    const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+    const emp_id = await AsyncStorage.getItem('emp_id');
+    console.log("Token CheckIn MarkAttendance "+" user authkey "+ User_Authkey + " ID " + emp_id)
+
+    return fetch('http://myworkday.nutantek.com/em_checkin.php?emp_id='+emp_id ,{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          Authorization: User_Authkey,
+      }
+  }).then((response) => response.json())
+  .then((responseJson) => {
+    console.log(responseJson)
+           if(responseJson == "sucess"){
+            ToastAndroid.show('Checkin Successfuly', ToastAndroid.LONG);
+           }
+           else{
+            ToastAndroid.show('Try Again', ToastAndroid.LONG);
+           }
+})
+      .catch((error) => {
+          console.error(error);
+      });
+
   }
 
   // Handling CheckOut
-  CheckoutHandler = () => {
-    this.setState({checkIn:false,checkOut:true})
+ async CheckoutHandler ()  {
+   // this.setState({checkIn:false,checkOut:true});
+    const User_Authkey = await AsyncStorage.getItem('User_Authkey');
+    const emp_id = await AsyncStorage.getItem('emp_id');
+    console.log("Token CheckOut Dashboard "+" user authkey "+ User_Authkey + " ID " + emp_id)
+
+    return fetch('http://myworkday.nutantek.com/em_checkout.php?emp_id='+emp_id ,{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          Authorization: User_Authkey,
+      }
+  }).then((response) => response.json())
+  .then((responseJson) => {
+    console.log(responseJson)
+    if(responseJson == "sucess"){
+      ToastAndroid.show('Checkout Successfuly', ToastAndroid.LONG);
+     }
+     else{
+      ToastAndroid.show('Try Again', ToastAndroid.LONG);
+     }
+})
+      .catch((error) => {
+          console.error(error);
+      });
   }
 
 

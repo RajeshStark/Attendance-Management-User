@@ -11,12 +11,12 @@ export default StyleSheet.create({
     }, 
   ViewStyle:{
     width: (DEVICE_WIDTH),
-    height:(DEVICE_WIDTH)/1.8,
+    height:(DEVICE_WIDTH)/1.6,
     backgroundColor:'#2B65EC',
     borderBottomRightRadius:80,
     borderBottomLeftRadius:80,
     justifyContent:'flex-start',
-    alignItems:'center'
+    alignItems:'center',
   },
 touchable:{
     width: (DEVICE_WIDTH)-20,
